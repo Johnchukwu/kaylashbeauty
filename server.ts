@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
-import { createApi } from "./api/app";
-import { connectDatabase } from "./api/config/database";
+import { createApi } from "./backend/app";
+import { connectDatabase } from "./backend/config/database";
 
 async function startServer() {
   await connectDatabase();

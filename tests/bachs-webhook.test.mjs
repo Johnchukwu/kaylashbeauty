@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("Bachs webhook verification signs the timestamp and unchanged raw body", () => {
   const source = readFileSync(
-    new URL("../api/routes/bachs-webhook.ts", import.meta.url),
+    new URL("../backend/routes/bachs-webhook.ts", import.meta.url),
     "utf8",
   );
 
@@ -13,9 +13,12 @@ test("Bachs webhook verification signs the timestamp and unchanged raw body", ()
 });
 
 test("confirmed payments notify the owner and delivery is marked only after customer email sends", () => {
-  const webhook = readFileSync(new URL("../api/routes/bachs-webhook.ts", import.meta.url), "utf8");
-  const admin = readFileSync(new URL("../api/routes/admin.ts", import.meta.url), "utf8");
-  const email = readFileSync(new URL("../api/services/email.ts", import.meta.url), "utf8");
+  const webhook = readFileSync(
+    new URL("../backend/routes/bachs-webhook.ts", import.meta.url),
+    "utf8",
+  );
+  const admin = readFileSync(new URL("../backend/routes/admin.ts", import.meta.url), "utf8");
+  const email = readFileSync(new URL("../backend/services/email.ts", import.meta.url), "utf8");
 
   assert.match(webhook, /sendPaidOrderNotification\(order\)/);
   assert.match(email, /sendPaidOrderNotification/);
@@ -43,7 +46,7 @@ test("admin delivery action shows a visible result when the request fails", () =
 });
 
 test("delivery email failures return a safe message instead of an SMTP stack trace", () => {
-  const admin = readFileSync(new URL("../api/routes/admin.ts", import.meta.url), "utf8");
+  const admin = readFileSync(new URL("../backend/routes/admin.ts", import.meta.url), "utf8");
 
   assert.match(admin, /Could not send the delivery email\. Check the Gmail app password\./);
   assert.match(admin, /return response\s*\.status\(502\)\s*\.json/);
